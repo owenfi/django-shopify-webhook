@@ -1,7 +1,7 @@
 from django.views.generic import View, TemplateView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.http.response import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.conf import settings
 
 from .decorators import webhook, app_proxy
