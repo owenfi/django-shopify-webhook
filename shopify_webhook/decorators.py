@@ -21,7 +21,12 @@ def webhook(f):
         # Ensure the request is a POST request.
         if request.method != 'POST':
             return HttpResponseMethodNotAllowed()
-        
+
+        # Ensure the request object has a "body". Handles versions of Django
+        # less than 1.3.
+        if not hasattr(request, 'body'):
+            request.body = request.raw_post_data
+
         # Try to get required headers and decode the body of the request.
         try:
             topic   = request.META['HTTP_X_SHOPIFY_TOPIC']
@@ -58,6 +63,11 @@ def carrier_request(f):
         # Ensure the request is a POST request.
         if request.method != 'POST':
             return HttpResponseMethodNotAllowed()
+
+        # Ensure the request object has a "body". Handles versions of Django
+        # less than 1.3.
+        if not hasattr(request, 'body'):
+            request.body = request.raw_post_data
 
         # Try to get required headers and decode the body of the request.
         try:
