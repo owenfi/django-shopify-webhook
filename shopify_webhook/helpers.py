@@ -31,6 +31,12 @@ def hmac_is_valid(body, secret, hmac_to_verify):
     """
     Return True if the given hmac_to_verify matches that calculated from the given body and secret.
     """
+    # Allow skipping of validation with an explicit setting.
+    # If setting not present, skip if in debug mode by default.
+    skip_validation = getattr(settings, 'SKIP_HMAC_VALIDATION', settings.DEBUG)
+    if skip_validation:
+        return True
+
     return get_hmac(body, secret) == hmac_to_verify
 
 
